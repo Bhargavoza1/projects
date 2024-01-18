@@ -22,3 +22,35 @@ Interpretability helps you see the impact of each piece of information on the mo
 
 - **Generalizability**: The generalizability of the models will be assessed based on their performance on unseen data. A model that can generalize well to new diabetes cases beyond the training dataset is preferable, 
 as it indicates the ability to capture underlying patterns common to different instances of the problem. The comparison between Logistic Regression and MLP will help evaluate which model is more effective in terms of generalization for the given diabetes dataset.
+
+
+# Diabetes Prediction
+
+Let’s start writing practice project in jupyter notebook.
+I ma using  [pima-indians-diabetes-database](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
+
+
+```
+pip install -r requirements.txt
+```
+This command reads the requirements.txt file and installs all the specified dependencies.
+
+Make sure you have Python and pip installed on your system, and the pip executable is added to your system's PATH.
+
+```jupyter
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy import stats
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_recall_curve, auc, precision_score, recall_score, roc_curve, roc_auc_score
+
+import tensorflow as tf
+
+```
