@@ -276,7 +276,7 @@ diabetes_DS2.dtypes
 **get_dummies** function from the pandas library to perform one-hot encoding on the DataFrame diabetes_DS2. This function converts categorical variables into dummy/indicator variables, 
 creating binary columns for each category and assigning 0 or 1 based on the presence of the category.
 ```python
-diabetes_DS2=pd.get_dummies(diabetes_DS2)
+diabetes_DS2 = pd.get_dummies(diabetes_DS2)
 ```
 **pd.factorize** function to convert categorical variables into numerical representations for specific columns in the DataFrame diabetes_DS2.
 ```python
@@ -295,8 +295,8 @@ The new features have been added to our dataset and converted every categorical 
 
 ## Train Test split
 ```
-cols_drop=['Outcome','BM_DESC_Under']
-X=diabetes_DS2.drop(cols_drop,axis=1)
+cols_drop = ['Outcome','BM_DESC_Under']
+X = diabetes_DS2.drop(cols_drop,axis=1)
 Y = diabetes_DS2['Outcome']
 ```
 Standardizing features helps these algorithms perform more efficiently and converge faster, leading to better overall model performance.
