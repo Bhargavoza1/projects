@@ -127,4 +127,41 @@ sns.heatmap(corr_matrix, annot= True)
 ```
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/corrheat.png"  alt=""  width={663} height={568} />
 
-## preprocessing
+## Preprocessing
+performing imputation for missing values in specific columns of the diabetes dataset using the median value of each respective column.
+
+```Python
+# Calculate the median value for BMI
+median_bmi = diabetes_DS['BMI'].median()
+# Substitute it in the BMI column of the
+# dataset where values are 0
+diabetes_DS['BMI'] = diabetes_DS['BMI'].replace(
+    to_replace=np.nan, value=median_bmi)
+
+median_bloodp = diabetes_DS['BloodPressure'].median()
+# Substitute it in the BloodP column of the
+# dataset where values are 0
+diabetes_DS['BloodPressure'] = diabetes_DS['BloodPressure'].replace(
+    to_replace=np.nan, value=median_bloodp)
+
+# Calculate the median value for PlGlcConc
+median_plglcconc = diabetes_DS['Glucose'].median()
+# Substitute it in the PlGlcConc column of the
+# dataset where values are 0
+diabetes_DS['Glucose'] = diabetes_DS['Glucose'].replace(
+    to_replace=np.nan, value=median_plglcconc)
+
+# Calculate the median value for SkinThick
+median_skinthick = diabetes_DS['SkinThickness'].median()
+# Substitute it in the SkinThick column of the
+# dataset where values are 0
+diabetes_DS['SkinThickness'] = diabetes_DS['SkinThickness'].replace(
+    to_replace=np.nan, value=median_skinthick)
+
+# Calculate the median value for SkinThick
+median_skinthick = diabetes_DS['Insulin'].median()
+# Substitute it in the SkinThick column of the
+# dataset where values are 0
+diabetes_DS['Insulin'] = diabetes_DS['Insulin'].replace(
+    to_replace=np.nan, value=median_skinthick)
+```
