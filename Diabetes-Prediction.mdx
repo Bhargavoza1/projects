@@ -165,3 +165,12 @@ median_skinthick = diabetes_DS['Insulin'].median()
 diabetes_DS['Insulin'] = diabetes_DS['Insulin'].replace(
     to_replace=np.nan, value=median_skinthick)
 ```
+
+**Use Z-scores to identify and filter out the outliers.**
+The boxen plot for Insulin shows that the data is skewed, with a long tail of high values. This means that there are a few people with very high Insulin levels, which could be due to outliers or a different population.
+
+```Python
+diabetes_DS.boxplot(figsize=(15,10))
+```
+
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/boxplotb.png"  alt=""  width={1000} height={800} />
