@@ -229,3 +229,46 @@ diabetes_DS2 = diabetes_DS2.assign(BM_DESC=diabetes_DS2.apply(set_bmi, axis=1))
 diabetes_DS2.head()
 ```
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/bmid.png"  alt=""  width={800} height={200} />
+
+Categorizing insulin levels as "Normal" or "Abnormal" based on specific criteria. It then applies this function to each row of the DataFrame diabetes_DS2, creating a new column 'INSULIN_DESC'.
+```python
+def set_insulin(row):
+    if row["Insulin"] >= 16 and row["Insulin"] <= 166:
+        return "Normal"
+    else:
+        return "Abnormal"
+
+diabetes_DS2 = diabetes_DS2.assign(INSULIN_DESC=diabetes_DS2.apply(set_insulin, axis=1))
+
+diabetes_DS2.head()
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/insulind.png"  alt=""  width={900} height={200} />
+
+```python
+sns.countplot(data=diabetes_DS2, x = 'INSULIN_DESC', label='Count')
+
+AB, NB = diabetes_DS2['INSULIN_DESC'].value_counts()
+print('Number of patients Having Abnormal Insulin Levels: ',AB)
+print('Number of patients Having Normal Insulin Levels: ',NB)
+```
+Number of patients Having Abnormal Insulin Levels:  435
+Number of patients Having Normal Insulin Levels:  253
+
+```python
+sns.countplot(data=diabetes_DS2, x = 'BM_DESC', label='Count')
+
+UD,H,OV,OB = diabetes_DS2['BM_DESC'].value_counts()
+print('Number of patients Having Underweight BMI Index: ',UD)
+print('Number of patients Having Healthy BMI Index: ',H)
+print('Number of patients Having Overweigth BMI Index: ',OV)
+print('Number of patients Having Obese BMI Index: ',OB)
+```
+Number of patients Having Underweight BMI Index:  424
+Number of patients Having Healthy BMI Index:  166
+Number of patients Having Overweigth BMI Index:  94
+Number of patients Having Obese BMI Index:  4
+
+```python
+diabetes_DS2.dtypes
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/dtypesb.png"  alt=""  width={282} height={209} />
