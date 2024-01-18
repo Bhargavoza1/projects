@@ -37,7 +37,7 @@ This command reads the requirements.txt file and installs all the specified depe
 
 Make sure you have Python and pip installed on your system, and the pip executable is added to your system's PATH.
 
-```jupyter
+```Python
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -52,5 +52,13 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_curve, auc, precision_score, recall_score, roc_curve, roc_auc_score
 
 import tensorflow as tf
-
 ```
+
+Reading dataset from the local file.
+```Python
+diabetes_DS = pd.read_csv('data/diabetes.csv')
+```
+
+Now, Displays the first few rows of the dataset, statistical summary, shape (number of rows and columns), and the count of different classes in the **Outcome** column (0 - Non-Diabetic, 1 - Diabetic).
+
+
