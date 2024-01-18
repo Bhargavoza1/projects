@@ -85,3 +85,19 @@ Outcome \
 
 0 - Non-Diabetic \
 1 - Diabetic
+
+
+The provided code uses the groupby function to group a DataFrame named diabetes_DS by the 'Outcome' column, calculates the mean for each group, and transposes the result. 
+The resulting DataFrame df contains columns for 'Outcome' 0 and 1, with rows representing mean values for each original column in the dataset.
+```Python
+df = diabetes_DS.groupby('Outcome').mean().T
+df
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/groupbyt.png"  alt="biological neuron"  width={336} height={275} />
+
+This formula calculates the percentage difference between values in columns labeled 0 and 1 in the DataFrame 'df'. The result is then stored in a new column labeled '%diff'. This formula is commonly used to measure the relative difference between two values.
+```
+df['%diff'] = (abs(df[0] - df[1] )/ ((df[0] + df[1])/2)) *100
+df
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/groupbytd.png"  alt="biological neuron"  width={410} height={275} />
