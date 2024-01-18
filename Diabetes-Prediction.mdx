@@ -64,12 +64,12 @@ Now, Displays the first few rows of the dataset, statistical summary, shape (num
 ```Python
 diabetes_DS.head()
 ```
-<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/dshead.png"  alt="biological neuron"  width={941} height={234} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/dshead.png"  alt=""  width={941} height={234} />
 
 ```Python
 diabetes_DS.describe()
 ```
-<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/dsdescribe.png"  alt="biological neuron"  width={1000} height={348} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/dsdescribe.png"  alt=""  width={1000} height={348} />
 
 ```Python
 diabetes_DS.shape
@@ -93,11 +93,38 @@ The resulting DataFrame df contains columns for 'Outcome' 0 and 1, with rows rep
 df = diabetes_DS.groupby('Outcome').mean().T
 df
 ```
-<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/groupbyt.png"  alt="biological neuron"  width={336} height={275} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/groupbyt.png"  alt=""  width={336} height={275} />
 
 This formula calculates the percentage difference between values in columns labeled 0 and 1 in the DataFrame 'df'. The result is then stored in a new column labeled '%diff'. This formula is commonly used to measure the relative difference between two values.
-```
+```Python
 df['%diff'] = (abs(df[0] - df[1] )/ ((df[0] + df[1])/2)) *100
 df
 ```
-<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/groupbytd.png"  alt="biological neuron"  width={410} height={275} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/groupbytd.png"  alt=""  width={410} height={275} />
+
+Dropping the column named 'Outcome' from the DataFrame diabetes_DS.
+```Python
+data = diabetes_DS.drop(columns= 'Outcome', axis=1)
+data.head()
+```
+
+```Python
+data.hist(bins=30, figsize=(15,10))
+plt.show()
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/hist.png"  alt=""  width={1000} height={834} />
+
+Computes the correlation matrix for the features in the dataset and visualizes it using a heatmap. This helps to identify relationships between different features.
+```Python
+corr_matrix = data.corr()
+corr_matrix
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/corr.png"  alt=""  width={900} height={272} />
+
+A correlation coefficient of 0.54, representing the maximum correlation between the variables "Pregnancies" and "Age," is considered moderate. This moderate correlation does not raise concerns.
+```Python
+sns.heatmap(corr_matrix, annot= True)
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/corrheat.png"  alt=""  width={663} height={568} />
+
+## preprocessing
