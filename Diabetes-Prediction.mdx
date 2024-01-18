@@ -209,3 +209,20 @@ Number of outliers removed: 80
 **After z**
 
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/boxplota.png"  alt=""  width={1000} height={800} />
+
+## Feature Engineering
+```Python
+def set_bmi(row):
+    if row["BMI"] < 18.5:
+        return "Under"
+    elif row["BMI"] >= 18.5 and row["BMI"] <= 24.9:
+        return "Healthy"
+    elif row["BMI"] >= 25 and row["BMI"] <= 29.9:
+        return "Over"
+    elif row["BMI"] >= 30:
+        return "Obese"
+
+diabetes_DS2 = diabetes_DS2.assign(BM_DESC=diabetes_DS2.apply(set_bmi, axis=1))
+
+diabetes_DS2.head()
+```
