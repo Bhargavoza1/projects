@@ -349,7 +349,7 @@ Y_test_pred = pd.DataFrame({
 Y_test_pred.head()
 ```
 
-### Confusion matrix
+## Confusion matrix
 
 A confusion matrix is a table that is often used to evaluate the performance of a classification model. It compares the predicted labels of a model with the actual labels, breaking down the results into four categories:
 - True Positives (TP): Instances that were correctly predicted as positive. In a binary classification scenario, it means the model correctly identified the positive class.
@@ -362,8 +362,8 @@ A confusion matrix is a table that is often used to evaluate the performance of 
 conf_matrix = confusion_matrix(Y_test, Y_pred)
 conf_matrix
 ```
-array([[83,  9], \
-       [20, 26]], dtype=int64)
+array([[83,  9],[20, 26]], dtype=int64)
+
 ```python
 # Plot the confusion matrix using seaborn
 plt.figure(figsize=(2, 2))
