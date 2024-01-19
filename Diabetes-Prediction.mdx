@@ -327,6 +327,23 @@ logisticregression = LogisticRegression(max_iter=200)
 logisticregression.fit(X_train,Y_train)
 ```
 
+Expression is calculating the accuracy of the logistic regression model on the training data and presenting it as a percentage rounded to two decimal places.
 ```python
 round(logisticregression.score(X_train, Y_train)*100, 2)
+```
+79.09
+
+Now, expression is calculating the accuracy on test data.
+```python
+round(logisticregression.score(X_test, Y_test)*100, 2)
+```
+78.99
+
+```python
+Y_pred = logisticregression.predict(X_test)
+Y_test_pred = pd.DataFrame({
+    'Y_test': Y_test,
+    'Y_pred': Y_pred
+})
+Y_test_pred.head()
 ```
