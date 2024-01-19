@@ -323,3 +323,10 @@ For a comprehensive explanation, kindly visit the following website:[logistic-re
 ```python
 logisticregression = LogisticRegression(max_iter=200)
 ```
+```python
+logisticregression.fit(X_train,Y_train)
+```
+
+```python
+round(logisticregression.score(X_train, Y_train)*100, 2)
+```
