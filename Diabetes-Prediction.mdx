@@ -26,7 +26,7 @@ This practice project aims to explore predictive analytics using a diabetes data
 # Diabetes Prediction
 
 Let’s start writing practice project in jupyter notebook.
-I ma using  [pima-indians-diabetes-database](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
+I am using  [pima-indians-diabetes-database](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
 
 
 ```
@@ -312,3 +312,10 @@ X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2, stratify=
 print(X.shape, X_train.shape, X_test.shape)
 ```
 (688, 13) (550, 13) (138, 13)
+
+## Logistic regression
+Logistic regression, used with the cross-entropy cost function, is widely used in machine learning for binary classification like spam detection. Logistic regression employs the logistic function to provide probabilities between 0 and 1. 
+The cross-entropy cost function measures dissimilarity between predicted probabilities and actual labels, facilitating accurate predictions. This combination offers a smooth, differentiable loss function, crucial for optimization methods like gradient descent. 
+The goal is to find optimal parameters (global minimum) by iteratively adjusting them during training, enhancing the model's generalization to new data.
+
+For a comprehensive explanation, kindly visit the following website:[logistic-regression](https://www.analyticsvidhya.com/blog/2021/08/conceptual-understanding-of-logistic-regression-for-data-science-beginners/) 
