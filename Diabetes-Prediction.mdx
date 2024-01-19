@@ -339,6 +339,7 @@ round(logisticregression.score(X_test, Y_test)*100, 2)
 ```
 78.99
 
+Quick comparison between the actual and predicted values. 
 ```python
 Y_pred = logisticregression.predict(X_test)
 Y_test_pred = pd.DataFrame({
@@ -347,3 +348,4 @@ Y_test_pred = pd.DataFrame({
 })
 Y_test_pred.head()
 ```
+
