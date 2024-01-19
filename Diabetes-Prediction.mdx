@@ -362,3 +362,15 @@ A confusion matrix is a table that is often used to evaluate the performance of 
 conf_matrix = confusion_matrix(Y_test, Y_pred)
 conf_matrix
 ```
+array([[83,  9], \
+       [20, 26]], dtype=int64)
+```python
+# Plot the confusion matrix using seaborn
+plt.figure(figsize=(2, 2))
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False)
+plt.title("Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
+```
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/lrcm.png"  alt=""  width={218} height={237} />
