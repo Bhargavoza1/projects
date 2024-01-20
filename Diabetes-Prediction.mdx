@@ -423,9 +423,9 @@ Let's calculate precision, recall, and F1-score for both classes (0 and 1)
     - Recall for Class 0 = specificity, selectivity or true negative rate (TNR)
 3. F1-score for Class 0: $F1_{c0} = 2 \times \frac{Precision_{c0} \times Recall_{c0}}{Precision_{c0} + Recall_{c0}} = 2 \times \frac{0.805 \times 0.902}{0.805 + 0.902} \approx 0.851 $
 4. Precision for Class 1: $P = \frac{TP}{TP + FP} = \frac{26}{26 + 9} \approx 0.743$
-    - Precision for Class 1 = precision or positive predictive value
+    - Precision for Class 1 = precision or positive predictive value (PPV)
 5. Recall for Class 1: $R = \frac{TP}{TP + FN} = \frac{26}{26 + 20} \approx 0.565$
-    - Recall for Class 1 = sensitivity, recall, hit rate, or true positive rate
+    - Recall for Class 1 = sensitivity, recall, hit rate, or true positive rate (TPR)
 6. F1-score for Class 1: $F1_{c1} = 2 \times \frac{Precision_{c1} \times Recall_{c1}}{Precision_{c1} + Recall_{c1}} = 2 \times \frac{0.743 \times 0.565}{0.743 + 0.565} \approx 0.643$
 
 ```python
@@ -464,3 +464,19 @@ Particularly useful when the class distribution is balanced, and both false posi
 
 As mentioned earlier, having a balanced class distribution is important for this ROC, but unfortunately, we don't have it. However, I still decided to implement it because it will give us insights into the relationship between ROC and precision and recall. 
 Interestingly, I haven't utilized ROC in any previous projects, but doing so has actually enhanced my understanding of the concept.
+
+**False Positive Rate (FPR):**
+- FPR = FP / ( FP + TN )
+- This formula represents the ratio of cases where the model incorrectly predicts positive (diabetes) among those who actually do not have diabetes.
+
+**True Negative Rate (TNR) or Specificity:**
+- TNR = TN / ( TN + FP )
+- This formula calculates the ratio of cases where the model correctly predicts negative (no diabetes) among those who actually do not have diabetes.
+
+**Relationship Between Specificity and False Positive Rate:**
+- TNR = 1 − FPR
+- This equation illustrates the relationship between Specificity (True Negative Rate) and False Positive Rate.
+ It emphasizes that the Specificity is complementary to the False Positive Rate. As Specificity increases, meaning the model becomes better at correctly identifying individuals without diabetes, the False Positive Rate decreases.
+
+ **Sensitivity**
+sensitivity = recall, true positive rate (TPR)
