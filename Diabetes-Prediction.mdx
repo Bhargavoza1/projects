@@ -386,12 +386,27 @@ plt.show()
 Precision, recall, and F1-score are important metrics in classification tasks because they provide a more nuanced evaluation of a model's performance than accuracy alone. 
 Each of these metrics addresses specific aspects of a model's behavior, and they become particularly relevant in situations where the class distribution is imbalanced or when the cost of different types of errors varies.
 
-- **Precision(Positive Predictive Value):** Precision is the ratio of true positives to the total predicted positives. It answers the question: "Of all the instances predicted as positive, how many were actually positive?"
-Precision is important when the cost of false positives is high. For example, in medical diagnoses, a high precision is crucial to avoid unnecessary treatments or interventions.
-- **Recall (Sensitivity or True Positive Rate):** Recall is the ratio of true positives to the total actual positives. It answers the question: "Of all the actual positive instances, how many were correctly predicted?"
-Recall is important when the cost of false negatives is high. In situations where failing to identify positive instances has serious consequences, recall becomes a critical metric. This is common in medical diagnoses, where missing a positive case may have severe implications.
-- **F1-score:** The F1-score is the harmonic mean of precision and recall. It provides a balanced measure that considers both false positives and false negatives.
+**Precision(Positive Predictive Value)** 
+- Precision = TP / (TP + FP)
+- Precision is the ratio of true positives to the total predicted positives. It answers the question: "Of all the instances predicted as positive, how many were actually positive?" 
+In our diabetes prediction project, precision is approximately 74.3%. High precision is crucial in medical diagnoses to avoid unnecessary treatments or interventions.
+- High Impact of False Positives: In the context of diabetes prediction, a false positive result (incorrectly predicting diabetes when it's not present) may lead to unnecessary stress, lifestyle changes, 
+or medical interventions for individuals who are actually healthy. This can have a significant impact on the quality of life and well-being of the affected individuals.
+- Reduced Trust in the Model: High false positives may also erode trust in the predictive model among both healthcare professionals and patients. If the model consistently produces false positives, 
+healthcare providers may become hesitant to rely on its predictions, potentially leading to a lack of adoption.
+
+**Recall (Sensitivity or True Positive Rate)** 
+- Recall = TP / (TP + FN)
+- Recall is the ratio of true positives to the total actual positives. It answers the question: "Of all the actual positive instances, how many were correctly predicted?" 
+In our diabetes prediction project, recall is approximately 56.5%. Recall becomes critical in medical diagnoses where missing a positive case may have severe implications.
+- High Impact of False Negatives: In diabetes prediction, a false negative result (missing a case of diabetes) can have serious consequences. Undetected diabetes may lead to delayed treatment, 
+allowing the condition to progress unchecked, potentially resulting in complications such as cardiovascular disease, kidney damage, or nerve damage.
+
+**F1-score**
+- F1-score = 2 * (Precision * Recall) / (Precision + Recall)
+- The F1-score is the harmonic mean of precision and recall. It provides a balanced measure that considers both false positives and false negatives.
 F1-score is useful when there is a need to balance precision and recall. It is especially relevant when there is an imbalance in the class distribution, and it helps in scenarios where both false positives and false negatives have significant consequences.
+- The F1-score helps strike a balance between precision and recall. In the diabetes prediction project, where both false positives and false negatives have significant consequences, the F1-score of 0.644 indicates a reasonable balance between the two metrics.
 
 
 ```python
