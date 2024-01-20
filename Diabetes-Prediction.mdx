@@ -457,3 +457,7 @@ As we move along the curves towards (1,1), precision steadily climbs to a perfec
 So, the sweet spot depends on what's more crucial for our diabetes prediction - making sure our positive predictions are super accurate (precision) or capturing as many actual positive cases as possible (recall). The trade-off between these two considerations is what these curves help us understand, ultimately guiding us to make informed decisions about our model.
 
 ## Receiver Operating Characteristic (ROC)
+The Receiver Operating Characteristic (ROC) curve is a graphical representation of the performance of a binary classification model at various classification thresholds. 
+The ROC curve is created by plotting the true positive rate (sensitivity) against the false positive rate (1-specificity) for different threshold values.
+
+Particularly useful when the class distribution is balanced, and both false positives and false negatives are important. It is commonly used in scenarios where the cost of false positives and false negatives are not markedly different.
