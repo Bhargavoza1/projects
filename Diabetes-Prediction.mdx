@@ -375,6 +375,10 @@ plt.ylabel("Actual")
 plt.show()
 ```
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/lrcm.png"  alt=""  width={218} height={237} />
+- True Negatives (TN): 83 cases where the patients actually did not have diabetes, and our model correctly predicted them as not having it.
+- True Positives (TP): 26 cases where patients actually have diabetes, and our model correctly predicted them as having it.
+- False Positives (FP): 9 cases where the patient actually has no diabetes, but our model incorrectly predicted that they do (Type I Error).
+- False Negatives (FN): 20 cases where the patient actually has diabetes, but our model incorrectly predicted that they don't (Type II Error).
 
 ##  Precision, Recall, and F1-score
 Precision, recall, and F1-score are important metrics in classification tasks because they provide a more nuanced evaluation of a model's performance than accuracy alone. 
