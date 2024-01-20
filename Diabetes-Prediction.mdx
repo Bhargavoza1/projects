@@ -353,12 +353,14 @@ Y_test_pred.head()
 ## Confusion matrix
 
 A confusion matrix is a table that is often used to evaluate the performance of a classification model. It compares the predicted labels of a model with the actual labels, breaking down the results into four categories:
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/cm.png"  alt=""  width={323} height={215} />
+
 - True Positives (TP): Instances that were correctly predicted as positive. In a binary classification scenario, it means the model correctly identified the positive class.
 - True Negatives (TN): Instances that were correctly predicted as negative. In a binary classification scenario, it means the model correctly identified the negative class.
 - False Positives (FP): Instances that were incorrectly predicted as positive. In a binary classification scenario, it means the model predicted positive when the actual class was negative (Type I error).
 - False Negatives (FN): Instances that were incorrectly predicted as negative. In a binary classification scenario, it means the model predicted negative when the actual class was positive (Type II error).
 
-<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/cm.png"  alt=""  width={323} height={215} />
+
 ```python
 conf_matrix = confusion_matrix(Y_test, Y_pred)
 conf_matrix
