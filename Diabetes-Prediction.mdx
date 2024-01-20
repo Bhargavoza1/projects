@@ -478,8 +478,8 @@ Interestingly, I haven't utilized ROC in any previous projects, but doing so has
 - This equation illustrates the relationship between Specificity (True Negative Rate) and False Positive Rate.
  It emphasizes that the Specificity is complementary to the False Positive Rate. As Specificity increases, meaning the model becomes better at correctly identifying individuals without diabetes, the False Positive Rate decreases.
 
- **Sensitivity**
-sensitivity = recall, true positive rate (TPR)
+**Sensitivity**
+- sensitivity = recall, true positive rate (TPR)
 
 ```python
 fpr, tpr, _ = roc_curve(Y_test, Y_pred_proba)
