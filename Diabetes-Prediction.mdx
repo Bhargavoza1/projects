@@ -513,4 +513,79 @@ An AUC-ROC of 0.87 suggests that the model has good discriminatory power, with a
 # MLP model with tensorflow
 If you are curious and want to understand the fundamentals behind the neural network of a multilayered perceptron please visit my article on the given link [Artificial Neural Network](https://bhargavoza.com/blogs/Artificial%20Neural%20Network).
 
-Our TensorFlow custom MLP model will produce varying results in each run due to the random initialization of weights and the stochastic nature of optimization algorithms. Additionally, our model may not perform well because of the limited data available in our project
+Our TensorFlow custom MLP model will produce varying results in each run due to the random initialization of weights and the stochastic nature of optimization algorithms. Additionally, our model may not perform well because of the limited data available in our project.
+
+```python
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(32, activation='relu', input_shape=(13,)),
+    tf.keras.layers.Dense(16, activation='relu'),
+    tf.keras.layers.Dense(8, activation='relu'),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+```
+
+```python
+# Compile the model
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0002),
+              loss='binary_crossentropy',
+              metrics=['accuracy' , tf.keras.metrics.AUC()])
+
+# Print the model summary
+model.summary()
+```
+```
+history = model.fit(X_train, Y_train, epochs=100 , batch_size=10, validation_split=0.2)
+```
+```python
+# Evaluate the model on the test set
+test_loss, test_accuracy, test_auc = model.evaluate(X_test , Y_test)
+print(f'\nTest Accuracy: {test_accuracy * 100:.2f}%')
+print(f'Test AUC: {test_auc:.4f}')
+```
+Test Accuracy: 77.54%
+Test AUC: 0.8327
+
+```python
+ # Predict probabilities on the test set
+Y_pred_proba  = model.predict(X_test )
+y_pred = np.where(Y_pred_proba >= 0.5, 1, 0)
+```
+
+```python
+conf_matrix = confusion_matrix(Y_test, y_pred)
+```
+```python
+# Plot the confusion matrix using seaborn
+plt.figure(figsize=(2, 2))
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False)
+plt.title("Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
+```
+
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/mlpcm.png"  alt=""  width={218} height={237} />
+
+```
+print(classification_report(Y_test, y_pred))
+```
+
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/Diabetes-Prediction/mlpclr.png"  alt=""  width={414} height={149} />
+
+```python
+# Calculate precision-recall curve
+precision_curve, recall_curve, _ = precision_recall_curve(Y_test, Y_pred_proba)
+```
+
+```python
+# Plot precision-recall curve
+area_under_curve = auc(recall_curve, precision_curve)
+plt.figure(figsize=(8, 6))
+plt.plot(recall_curve, precision_curve, label=f'Precision-Recall Curve (AUC = {area_under_curve:.2f})', color='b')
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.title('Precision-Recall Curve')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
