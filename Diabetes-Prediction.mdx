@@ -451,11 +451,16 @@ plt.show()
 
 In the context of a diabetes prediction project, precision and recall curves are like guides showing how well our model is making predictions. Imagine precision as a measure of how accurate our positive predictions are, and recall as a measure of how many actual positive cases our model captures.
 
-Now, at the point (0,0) on the curves, it's like starting from scratch. Here, precision is around 0.33, suggesting our positive predictions might not be very accurate initially. However, recall is at a perfect 1.0, showing that the model is great at catching all actual positive cases, even if it includes some false positives.
+**Starting Point (0, 0):**
+- At the origin (0, 0), the recall is 0, indicating that no positive cases are being correctly identified. This means the model is essentially classifying everything as negative.
+- At this point, precision is undefined or can be considered 1.0 (depending on the implementation). This is because there are no true positives (TP) and no false positives (FP), so the precision formula (TP / (TP + FP)) results in a division by zero. 
 
-As we move along the curves towards (1,1), precision steadily climbs to a perfect 1.0. This means that at certain thresholds, our positive predictions become spot-on accurate. However, recall starts to dip a bit, indicating that as we become more selective, some actual positive cases might be missed.
+**Movement along the Curve:**
+- As you move along the curve towards (1, 1), recall increases. This means the model is correctly identifying more positive cases. 
+- However, precision generally decreases. This is because, as the model becomes more sensitive to positive cases, it also tends to include more false positives, lowering the precision. 
 
-So, the sweet spot depends on what's more crucial for our diabetes prediction - making sure our positive predictions are super accurate (precision) or capturing as many actual positive cases as possible (recall). The trade-off between these two considerations is what these curves help us understand, ultimately guiding us to make informed decisions about our model.
+**Trade-off:**
+- The precision-recall curve illustrates the inherent trade-off between these two metrics. You often need to find a balance between capturing as many positive cases as possible (high recall) while maintaining a reasonable level of accuracy in your positive predictions (high precision). 
 
 ## Receiver Operating Characteristic (ROC)
 The Receiver Operating Characteristic (ROC) curve is a graphical representation of the performance of a binary classification model at various classification thresholds. 
