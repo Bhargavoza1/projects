@@ -462,6 +462,11 @@ In the context of a diabetes prediction project, precision and recall curves are
 **Trade-off:**
 - The precision-recall curve illustrates the inherent trade-off between these two metrics. You often need to find a balance between capturing as many positive cases as possible (high recall) while maintaining a reasonable level of accuracy in your positive predictions (high precision). 
 
+**Area Under the Curve (AUC):**
+- The AUC-PR (Area Under the Precision-Recall Curve) is a summary metric that captures the overall performance of a model across different thresholds. 
+- A higher AUC-PR generally indicates better performance, with an ideal value of 1.0. 
+- In the provided image, the AUC-PR is 0.79, suggesting a reasonably good performance, but there might be room for improvement. 
+
 ## Receiver Operating Characteristic (ROC)
 The Receiver Operating Characteristic (ROC) curve is a graphical representation of the performance of a binary classification model at various classification thresholds. 
 The ROC curve is created by plotting the true positive rate (sensitivity) against the false positive rate (1-specificity) for different threshold values.
