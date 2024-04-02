@@ -11,6 +11,7 @@ leveraging CUDA C++ and OpenCV to develop a sophisticated neural network for acc
 Through extensive work, I have created a system that seamlessly integrates with a Golang server and is complemented by a React-powered frontend. 
 Deployment on Azure AKS with GitHub Actions ensures streamlined deployment and management.
 
+github [kidney_tumor_CL_cudaC](https://github.com/Bhargavoza1/kidney_tumor_CL_cudaC)
 <Video id="EOlm8V3Ajgo" />
 
 # Prerequisite Knowledge
@@ -48,3 +49,54 @@ The sigmoid activation layer outputs a probability distribution over the possibl
 
 # Compilation
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/cuda_cnn/compilation_flow.png"  alt=""  width={550} height={628} />
+
+**note**: For learning purposes, I am building OpenCV from the source. If you want you can install  it by **apt-get install libopencv-dev**
+
+1. C++ Compilation: Initially, the CMake configuration compiles the C++ sources and creates a shared library (.so file) named app using CUDA for GPU acceleration and OpenCV for computer vision functionalities. This library contains the CUDA-accelerated neural network components.
+
+2. Go Compilation: After the C++ compilation is completed, the CMake configuration invokes the Go compiler to compile the Go source file (app.go). The resulting executable is named backend.
+
+3. Linking C++ Library with Go Executable: During the Go compilation step, the Go program (backend) is linked with the previously compiled C++ shared library (app.so). This linking allows the Go program to utilize the functionalities provided by the C++ library.
+
+
+# How to run this?
+
+## locally 
+Locally you need docker and docker compose. And Nvidia GPU with cuda v12.2
+
+```
+docker-compose -f docker-compose.build.yml build
+```
+you have to wait.
+
+```
+docker-compose -f docker-compose.build.yml up
+```
+
+web app will start on http://localhost:3000/. However, you still need to wait for the completion of the neural network training process.
+you can find kidney images inside " ./NN_backend/cuda_nn/kidney-ct-scan-image ".
+
+## Azure
+I've developed a comprehensive CI/CD pipeline using GitHub Actions to seamlessly deploy applications onto the Azure cloud.
+workflow dir "./github/workflows/"
+
+### Required credentials
+1. AZURE_CLIENT_ID
+2. AZURE_TENANT_ID
+3. AZURE_SUBSCRIPTION_ID
+4. ACR_USERNAME
+5. ACR_PASSWORD
+
+Please refer to the following link for instructions on obtaining the necessary credentials. 
+
+[azure-login#workflow-examples](https://github.com/marketplace/actions/azure-login#workflow-examples)
+
+I used a service principal to enable authentication, and then employed OIDC methods for the login process.
+
+In Azure, I created an application within the "App Registrations" section and assigned it the owner role with constrained permissions. Specifically, this application is only permitted to assign the AcrPull role to other resources like AKS.
+
+And created a Container registry to push docker images. 
+
+CICD pipeline 
+
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/cuda_cnn/cicd.png"  alt=""  width={960} height={540} />
