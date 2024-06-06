@@ -34,3 +34,27 @@ and run train_test.py
 
 # Transformers Architecture
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/transformer/tf_ar.png"  alt=""  width={768} height={1000} />
+Don't worry about the diagram, I'll break down everything step by step and explain each component and block in this transformer model architecture.
+
+Understanding Transformer Models in Simple Terms
+
+1. **Attention**: Imagine you're reading a story. Some words are more important for understanding than others. Attention in a transformer is like giving more focus to the important words while reading.
+
+2. **Encoder**: Think of this as the part of the model that understands the story you're reading. It figures out the meaning of each word and how they relate to each other.
+
+3. **Decoder**: This part of the model uses what the encoder understood to create a new story, maybe in a different language. It's like translating or summarizing.
+
+4. **Positional Encoding**: Since the model doesn't naturally know the order of words, positional encoding is like giving each word a number to show its place in the story.
+
+5. **Word Embedding**: When the model reads words, it doesn't see them like we do. Instead, it turns each word into a special code called a vector. These vectors help the model understand the meaning of words based on how they're used in the story.
+
+6. **Feed-Forward Neural Networks (FFNN)**: These are like super smart calculators. They help the model understand complex patterns in the story.
+
+7. **Residual Connections**: Imagine if you're building a tall tower with blocks. Sometimes, to make sure the tower doesn't fall, you add extra support. Residual connections are like that extra support for the model, helping it learn better.
+
+8. **Layer Normalization**: This is like making sure each part of the model is using the same scale or rules to understand the story. It keeps everything fair and balanced.
+
+9. **Multi-Head Attention**: Think of this as having multiple pairs of eyes reading the story at the same time, each looking for different important parts.
+
+10. **Masking**: When the model is learning to create its own story, it shouldn't cheat and look ahead. Masking is like covering up parts of the story the model hasn't reached yet, so it can only use what it's learned so far.
+
