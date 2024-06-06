@@ -63,3 +63,41 @@ Understanding Transformer Models in Simple Terms
 In this deep dive, we will explore the Transformer model, focusing on a practical use case: translating text from English to Italian.
 
 In this guide, we'll break down the process into several stages, starting with data preprocessing. 
+
+## Data Preprocessing
+
+**Tokenization:** Is important for transformer models in natural language processing because it breaks down text into smaller parts, called tokens, that the model can understand. This helps the model learn patterns in the data and handle different input lengths and unknown words, improving its ability to understand and generate human language.
+
+To put it in simpler terms, we are giving each word a specific index.
+
+train_test
+
+```Python
+def get_or_build_tokenizer(config, ds, lang):
+    # Construct the file path for the tokenizer using the language-specific format
+    tokenizer_path = Path(config['tokenizer_file'].format(lang))
+
+    # Check if the tokenizer file exists at the specified path
+    if not Path.exists(tokenizer_path):
+        # If the tokenizer file does not exist, create a new WordLevel tokenizer
+        tokenizer = Tokenizer(WordLevel(unk_token="[UNK]"))
+
+        # Set the pre-tokenizer to split text by whitespace
+        tokenizer.pre_tokenizer = Whitespace()
+
+        # Define a trainer for the tokenizer with special tokens and a minimum frequency threshold
+        trainer = WordLevelTrainer(special_tokens=["[UNK]", "[PAD]", "[SOS]", "[EOS]"], min_frequency=2)
+
+        # Train the tokenizer on sentences from the dataset for the specified language
+        # 'get_all_sentences(ds, lang)' is return an iterator over all sentences
+        tokenizer.train_from_iterator(get_all_sentences(ds, lang), trainer=trainer)
+
+        # Save the trained tokenizer to the specified file path
+        tokenizer.save(str(tokenizer_path))
+    else:
+        # If the tokenizer file exists, load the tokenizer from the file
+        tokenizer = Tokenizer.from_file(str(tokenizer_path))
+
+    # Return the tokenizer, either newly created or loaded from the file
+    return tokenizer
+```
