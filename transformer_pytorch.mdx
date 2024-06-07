@@ -257,3 +257,21 @@ Word embeddings encode semantic information about words. Words with similar mean
 Word embeddings transform words or tokens into dense numerical vectors in a continuous vector space. Each word in a vocabulary is represented by a unique vector, typically of fixed length.
 
 Here we are using a dimension of 512.
+
+model.py
+```Python
+class InputEmbeddings(nn.Module):
+
+    def __init__(self, d_model: int, vocab_size: int) -> None:
+        super().__init__()
+        self.d_model = d_model
+        self.vocab_size = vocab_size
+        self.embedding = nn.Embedding(vocab_size, d_model)
+
+    def forward(self, x):
+        # (batch, seq_len) --> (batch, seq_len, d_model)
+        # Multiply by sqrt(d_model) to scale the embeddings according to the paper
+        return self.embedding(x) * math.sqrt(self.d_model)
+```
+
+Over time, the performance of finding semantic similarity of words will improve as the transformer model is trained.
