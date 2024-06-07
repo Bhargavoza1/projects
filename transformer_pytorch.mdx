@@ -107,6 +107,8 @@ torch.utils.data.Dataset is a powerful tool in PyTorch for creating custom datas
 "Dataset" is an abstract class, meaning you don't use it directly. Instead, you create a subclass and implement specific methods to define how data should be accessed and manipulated. 
 In the code provided below, we have implemented our own custom logic to include an additional token in our sentences.
 
+Let's skip the causal_mask function for now. I'll cover what masking is in more detail later on in our walk through.
+
 dataset.py
 ```Python
 import torch
