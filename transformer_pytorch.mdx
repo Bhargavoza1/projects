@@ -290,3 +290,45 @@ Positional Encodings are added to the input embeddings at the bottom of the enco
 ```math
 \text{PE}_{(pos, 2i+1)} = \cos \left( \frac{\text{pos}}{10000^{\frac{2i}{d_{model}}}} \right) 
 ```
+### Key Reasons for Using Multiple Frequencies
+
+1. **Encoding Different Scales of Relationships:**
+   * Different frequency components enable the model to capture both short-term and long-term dependencies.
+   * Higher frequencies correspond to fine-grained (local) positional differences, whereas lower frequencies capture broader (global) positional patterns.
+
+2. **Uniqueness of Position Representation:**
+   * Using a combination of sine and cosine functions at different frequencies ensures that each position has a unique encoding. This uniqueness helps the model distinguish between different positions effectively.
+   * If we used a single frequency, the positional encodings might not be distinct enough to represent different positions clearly.
+
+3. **Periodicity and Continuity:**
+   * The sine and cosine functions are periodic, which means they repeat their values in regular intervals. This periodicity can help the model understand cyclical patterns in the data.
+   * The continuous nature of these functions allows for smooth interpolation between positions, which can be beneficial when dealing with sequences of varying lengths.
+
+model.py
+```Python
+class PositionalEncoding(nn.Module):
+
+    def __init__(self, d_model: int, seq_len: int, dropout: float) -> None:
+        super().__init__()
+        self.d_model = d_model
+        self.seq_len = seq_len
+        self.dropout = nn.Dropout(dropout)
+        # Create a matrix of shape (seq_len, d_model)
+        pe = torch.zeros(seq_len, d_model)
+        # Create a vector of shape (seq_len)
+        position = torch.arange(0, seq_len, dtype=torch.float).unsqueeze(1) # (seq_len, 1)
+        # Create a vector of shape (d_model)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model)) # (d_model / 2)
+        # Apply sine to even indices
+        pe[:, 0::2] = torch.sin(position * div_term) # sin(position * (10000 ** (2i / d_model))
+        # Apply cosine to odd indices
+        pe[:, 1::2] = torch.cos(position * div_term) # cos(position * (10000 ** (2i / d_model))
+        # Add a batch dimension to the positional encoding
+        pe = pe.unsqueeze(0) # (1, seq_len, d_model)
+        # Register the positional encoding as a buffer
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        x = x + (self.pe[:, :x.shape[1], :]).requires_grad_(False) # (batch, seq_len, d_model)
+        return self.dropout(x)
+```
