@@ -275,3 +275,18 @@ class InputEmbeddings(nn.Module):
 ```
 
 Over time, the performance of finding semantic similarity of words will improve as the transformer model is trained.
+
+## Positional Encoding
+Transformers process input tokens in parallel rather than sequentially (unlike RNNs), they need a way to encode the position of each token in the sequence.
+Positional Encoding provides a way to inject some information about the position of each token within the sequence into the model. This helps the transformer to differentiate between different positions and understand the order of the tokens. 
+
+Positional Encodings are added to the input embeddings at the bottom of the encoder and decoder stacks. There are several ways to implement positional encoding, but the most common method used in the original transformer paper "Attention is All You Need" employs sinusoidal functions of different frequencies. 
+
+**Sine Component**
+```math
+\text{PE}_{(pos, 2i)} = \sin \left( \frac{\text{pos}}{10000^{\frac{2i}{d_{model}}}} \right) 
+```
+**Cosine Component**
+```math
+\text{PE}_{(pos, 2i+1)} = \cos \left( \frac{\text{pos}}{10000^{\frac{2i}{d_{model}}}} \right) 
+```
