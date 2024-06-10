@@ -348,3 +348,12 @@ In this section, we will delve into the intricacies of the multi-head attention 
 **Keys (K)** : Keys are another set of vectors derived from the input sequence, representing the tokens in a way that makes them comparable with the queries. Each key vector can be thought of as an answer to a potential query. When a query from one token interacts with the keys of all tokens, it determines how much focus or attention each token should receive relative to the query token.
 
 **Values (V)** : Values are the representations of the input sequence that are used to produce the final output of the attention mechanism. While queries and keys determine the attention weights, values are the actual content that gets combined to form the output. The values are weighted by the attention scores to reflect the importance of each token as determined by the interaction of queries and keys.
+
+For self-attention, the same input embeddings are used to generate queries (Q), keys (K), and values (V) through learned linear transformations. Each token’s embedding is projected into these three distinct spaces:
+
+$$Q=XW_Q$$
+$$K=XW_K$$
+$$V=XW_V$$
+
+
+Where $$𝑊_𝑄​ , 𝑊_𝐾​ , and 𝑊_𝑉$$​ are learned weight matrices of dimensions $$𝑑 × 𝑑_𝑘$$. Consequently, 𝑄, 𝐾, and 𝑉 are matrices of size $$𝑛 × 𝑑_𝑘$$.
