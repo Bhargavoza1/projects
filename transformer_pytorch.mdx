@@ -531,7 +531,7 @@ This simple addition ensures that the gradient can flow directly through the net
 ### Layer Normalization in Transformers
 Layer normalization is a technique used to stabilize and accelerate the training of deep neural networks by normalizing the inputs to each layer. Unlike batch normalization, which normalizes across the batch dimension, layer normalization normalizes across the features for each training example.
 
-Mathematically, for an input $$𝑥$$ with mean $$𝜇$$ and variance $$𝜎^2$$  , the layer normalization is defined as:
+Mathematically, for an input $$x$$ with mean $$\mu$$ and variance $$\sigma^2$$  , the layer normalization is defined as:
 
 $$LayerNorm(x) = \gamma(\frac{x-\mu}{\sqrt{ \sigma^2 + \epsilon}}) + \beta$$
 
