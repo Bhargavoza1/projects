@@ -449,3 +449,73 @@ While standard MHA is powerful, it lacks the ability to preserve the autoregress
 essential for tasks where the model should not have access to future information during inference. 
 This is where Masked Multi-Head Attention comes into play. By applying a mask to the attention scores, 
 Masked MHA ensures that each token in the sequence attends only to preceding tokens, preventing it from peeking into the future.
+
+The masking mechanism in Masked MHA involves modifying the attention scores to enforce the autoregressive constraint. 
+Specifically, a mask matrix is applied to the attention scores, setting future positions to very large negative values (e.g.,−∞). 
+This effectively blocks attention to future tokens, ensuring that the model's predictions depend only on the tokens that precede them in the sequence.
+
+
+Demonstrating sample code to illustrate the functionality of a mask.
+
+```Python
+
+import torch
+
+# Define the mask tensor
+mask = torch.tensor([
+    [1, 0, 0],
+    [1, 1, 0],
+    [1, 1, 1]
+])
+
+# Attention scores (example)
+scores = torch.tensor([
+    [0.8, 0.1, 0.2],
+    [0.3, 0.9, 0.5],
+    [0.2, 0.5, 0.7]
+])
+
+# Apply mask to attention scores
+masked_scores = torch.where(mask == 1, scores, float('-inf'))
+
+# Softmax function
+softmax = torch.nn.Softmax(dim=-1)
+
+# Apply softmax to the masked scores
+attention_weights = softmax(masked_scores)
+
+print("Mask Tensor (mask):")
+print(mask)
+
+print("\nAttention Scores:")
+print(scores)
+
+print("\nMasked Attention Scores:")
+print(masked_scores)
+
+print("\nAttention Weights (after softmax):")
+print(attention_weights)
+
+```
+output
+```Python
+Mask Tensor (mask):
+tensor([[1, 0, 0],
+        [1, 1, 0],
+        [1, 1, 1]])
+
+Attention Scores:
+tensor([[0.8000, 0.1000, 0.2000],
+        [0.3000, 0.9000, 0.5000],
+        [0.2000, 0.5000, 0.7000]])
+
+Masked Attention Scores:
+tensor([[0.8000,   -inf,   -inf],
+        [0.3000, 0.9000,   -inf],
+        [0.2000, 0.5000, 0.7000]])
+
+Attention Weights (after softmax):
+tensor([[1.0000, 0.0000, 0.0000],
+        [0.3543, 0.6457, 0.0000],
+        [0.2501, 0.3376, 0.4123]])
+```
