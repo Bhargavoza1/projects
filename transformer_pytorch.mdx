@@ -444,5 +444,8 @@ class MultiHeadAttentionBlock(nn.Module):
         return self.w_o(x)
 ```
 
-
-
+## Masked Multi-Head Attention
+While standard MHA is powerful, it lacks the ability to preserve the autoregressive property, 
+essential for tasks where the model should not have access to future information during inference. 
+This is where Masked Multi-Head Attention comes into play. By applying a mask to the attention scores, 
+Masked MHA ensures that each token in the sequence attends only to preceding tokens, preventing it from peeking into the future.
