@@ -528,7 +528,7 @@ Output=$$F(x)+x$$
 
 This simple addition ensures that the gradient can flow directly through the network, preventing it from becoming too small during backpropagation. This is crucial for deep models like transformers, which consist of many layers.
 
-### Layer Normalization in Transformers
+### Layer Normalization in Residual Connections
 Layer normalization is a technique used to stabilize and accelerate the training of deep neural networks by normalizing the inputs to each layer. Unlike batch normalization, which normalizes across the batch dimension, layer normalization normalizes across the features for each training example.
 
 Mathematically, for an input $$x$$ with mean $$\mu$$ and variance $$\sigma^2$$  , the layer normalization is defined as:
