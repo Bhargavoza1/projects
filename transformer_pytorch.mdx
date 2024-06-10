@@ -340,3 +340,11 @@ capturing complex relationships and dependencies more effectively than previous 
 In this section, we will delve into the intricacies of the multi-head attention mechanism, explaining its components and functionality step by step.
 
 <CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/transformer/mha.png"  alt=""  width={1024} height={512} />
+
+### Linear Projections
+
+**Queries (Q)** : Queries are representations of the input sequence that the model uses to ask questions about the importance of different tokens. For each token in the sequence, a query vector is generated to interact with the keys of all tokens. The query essentially determines "which parts of the input sequence should be attended to" when processing a particular token.
+
+**Keys (K)** : Keys are another set of vectors derived from the input sequence, representing the tokens in a way that makes them comparable with the queries. Each key vector can be thought of as an answer to a potential query. When a query from one token interacts with the keys of all tokens, it determines how much focus or attention each token should receive relative to the query token.
+
+**Values (V)** : Values are the representations of the input sequence that are used to produce the final output of the attention mechanism. While queries and keys determine the attention weights, values are the actual content that gets combined to form the output. The values are weighted by the attention scores to reflect the importance of each token as determined by the interaction of queries and keys.
