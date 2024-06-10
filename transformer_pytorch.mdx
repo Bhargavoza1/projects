@@ -332,3 +332,10 @@ class PositionalEncoding(nn.Module):
         x = x + (self.pe[:, :x.shape[1], :]).requires_grad_(False) # (batch, seq_len, d_model)
         return self.dropout(x)
 ```
+
+## Multi-Head Attention
+"Attention is All You Need," revolutionized the field of natural language processing (NLP) by leveraging attention mechanisms to process sequential data. 
+Central to the Transformer’s success is the multi-head attention mechanism, which allows the model to attend to different parts of a sequence simultaneously, 
+capturing complex relationships and dependencies more effectively than previous architectures like recurrent neural networks (RNNs) or convolutional neural networks (CNNs). 
+In this section, we will delve into the intricacies of the multi-head attention mechanism, explaining its components and functionality step by step.
+
