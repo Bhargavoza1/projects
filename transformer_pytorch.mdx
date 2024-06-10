@@ -520,3 +520,21 @@ tensor([[1.0000, 0.0000, 0.0000],
         [0.2501, 0.3376, 0.4123]])
 ```
 
+## Residual Connections
+Residual connections are designed to help mitigate the vanishing gradient problem, making it easier to train deep neural networks.
+In a transformer, residual connections add the input of a layer to its output before passing it to the next layer. Mathematically, for an input $$x$$ and a layer operation $$F(x)$$, the output with a residual connection is given by:
+
+Output=$$F(x)+x$$
+
+This simple addition ensures that the gradient can flow directly through the network, preventing it from becoming too small during backpropagation. This is crucial for deep models like transformers, which consist of many layers.
+
+### Layer Normalization in Transformers
+Layer normalization is a technique used to stabilize and accelerate the training of deep neural networks by normalizing the inputs to each layer. Unlike batch normalization, which normalizes across the batch dimension, layer normalization normalizes across the features for each training example.
+
+Mathematically, for an input $$𝑥$$ with mean $$𝜇$$ and variance $$𝜎^2$$  , the layer normalization is defined as:
+
+$$LayerNorm(x) = \gamma(\frac{x-\mu}{\sqrt{ \sigma^2 + \epsilon}}) + \beta$$
+
+Here, $$\gamma$$  and $$\beta$$ are learnable parameters that scale and shift the normalized output, and $$\epsilon$$ is a small constant to prevent division by zero.
+
+
