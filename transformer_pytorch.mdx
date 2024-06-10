@@ -362,3 +362,10 @@ Where $$W_Q$$, $$W_K$$ ,and $$W_V$$ are learned weight matrices of dimensions $$
 
 Each attention head computes the attention scores using the scaled dot-product attention mechanism. This involves three main steps:
 
+1. The dot products between the query vectors and key vectors are computed to get raw attention scores: 
+
+scores = $$QK^T$$
+
+2. The raw attention scores are scaled by the square root of the dimension of the key vectors $$d_k$$. This helps in stabilizing the gradients during training:
+
+scaled_scores= $$\frac{scores}{\sqrt{d_k}}$$
