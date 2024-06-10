@@ -568,3 +568,10 @@ class ResidualConnection(nn.Module):
         def forward(self, x, sublayer):
             return x + self.dropout(sublayer(self.norm(x)))
 ```
+
+## Feed-Forward Networks?
+
+Feed-forward networks introduce non-linearities into the model. This is crucial because the self-attention mechanism alone is a linear operation, 
+and without non-linearity, the model would not be able to capture complex patterns and interactions within the data. The non-linear activation functions in FFNs allow the model to learn more intricate representations of the input data.
+
+$$FFN(x)=max(0,xW_1+b_1)W_2+b_2$$
