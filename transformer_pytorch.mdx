@@ -926,6 +926,11 @@ def run_validation(model, validation_ds, tokenizer_src, tokenizer_tgt, max_len, 
             if count == num_examples:
                 print_msg('-' * console_width)
                 break
+
+if __name__ == '__main__':
+    #warnings.filterwarnings("ignore")
+    config = get_config()
+    train_model(config)
 ```
 
 note: I'm not familiar with Italian, but here's the result from our fourth epoch.
