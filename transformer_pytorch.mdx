@@ -351,9 +351,9 @@ In this section, we will delve into the intricacies of the multi-head attention 
 
 For self-attention, the same input embeddings are used to generate queries (Q), keys (K), and values (V) through learned linear transformations. Each token’s embedding is projected into these three distinct spaces:
 
-$$Q=XW_Q$$
-$$K=XW_K$$
-$$V=XW_V$$
+$$Q=XW_Q$$ \
+$$K=XW_K$$ \
+$$V=XW_V$$ \
 
 
 Where $$𝑊_𝑄​ , 𝑊_𝐾​ , and 𝑊_𝑉$$​ are learned weight matrices of dimensions $$𝑑 × 𝑑_𝑘$$. Consequently, 𝑄, 𝐾, and 𝑉 are matrices of size $$𝑛 × 𝑑_𝑘$$.
