@@ -25,3 +25,43 @@ Developed by Meta, LLaMA 2 is an advanced language model that excels in understa
 
 ## Flask
 Flask is a lightweight web framework for Python, perfect for developing the front-end of the chatbot. It allows for quick development and easy integration with other components of the system.
+
+# Setting Up Pinecone
+The first step in building the chatbot was setting up Pinecone. This involved creating a Pinecone index to store and manage the embeddings. These embeddings represent the semantic meaning of the medical queries and responses, allowing for efficient retrieval and matching.
+
+We require the below credentials to access our pinecone vector database.
+```ini
+PINECONE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+INDEX_NAME=medical-chatbot
+```
+
+store_index.py
+```Python
+from src.helper import load_pdf, text_split, download_hugging_face_embeddings
+from dotenv import load_dotenv
+import os
+from langchain_pinecone import PineconeVectorStore
+
+load_dotenv()
+
+index_name = os.environ.get('INDEX_NAME')
+
+try:
+    # Get the current working directory (where the script is executed)
+    current_working_directory = os.getcwd()
+
+    data_directory = os.path.join(current_working_directory, "data")
+
+    extracted_data = load_pdf(data_directory)
+    print("PDFs loaded successfully.")
+except FileNotFoundError as e:
+    print(e)
+
+text_chunks = text_split(extracted_data)
+embeddings = download_hugging_face_embeddings()
+
+
+#Creating Embeddings for Each of The Text Chunks & storing
+docsearch=PineconeVectorStore.from_texts([t.page_content for t in text_chunks], embeddings, index_name=index_name)
+
+```
