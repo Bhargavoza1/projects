@@ -1,6 +1,6 @@
 ---
 title: "Unitree H1 DeepMimic: Silent Failures in Motion Imitation"
-image: /projects/h1/hero.jpg
+image: https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/h1_deepmimic/hero.jpg
 description: A from-scratch DeepMimic reimplementation for the 19-DOF Unitree H1 humanoid in MuJoCo MJX and JAX, and the 22 silent failures that the reward curve never showed.
 date: 2026-10-05
 tags: [robotics, reinforcement_learning, humanoid, mujoco, jax, research, project]
@@ -8,7 +8,10 @@ tags: [robotics, reinforcement_learning, humanoid, mujoco, jax, research, projec
 
 **Paper:** [What the Reward Curve Didn’t Show: Silent Failures in DeepMimic-Style Imitation on the Unitree H1](https://doi.org/10.5281/zenodo.23150476) (Zenodo preprint, DOI 10.5281/zenodo.23150476) &nbsp;·&nbsp; [Download PDF](/papers/Oza_2026_Silent_Failures_DeepMimic_H1.pdf) &nbsp;·&nbsp; [Code on GitHub](https://github.com/Bhargavoza1/h1-imitation-learning)
 
-<CustomImage src="/projects/h1/hero.jpg" alt="The trained Unitree H1 policy (black) walking next to the reference motion (transparent green) in the MuJoCo viewer" height={1112} width={1500} priority="true" />
+<video poster="/projects/h1/walk-poster.jpg" autoPlay loop muted playsInline controls style={{ width: "100%", borderRadius: "8px" }}>
+  <source src="/projects/h1/walk.webm" type="video/webm" />
+  <source src="/projects/h1/walk.mp4" type="video/mp4" />
+</video>
 
 *The trained policy (black) walking next to the reference motion (green ghost) in the MuJoCo viewer.*
 
@@ -51,9 +54,9 @@ None of the bugs showed up in the reward curve. I found them by comparing the ro
 
 ## Results
 
-<CustomImage src="/projects/h1/fig2-reward.jpg" alt="Mean reward per step over 1,605 PPO updates" height={606} width={1694} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/h1_deepmimic/fig2-reward.jpg" alt="Mean reward per step over 1,605 PPO updates" height={606} width={1694} />
 
-<CustomImage src="/projects/h1/fig2-done.jpg" alt="Termination rate over 1,605 PPO updates" height={606} width={1694} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/h1_deepmimic/fig2-done.jpg" alt="Termination rate over 1,605 PPO updates" height={606} width={1694} />
 
 *Mean reward (top) and termination rate (bottom) over 1,605 PPO updates, about 4.9 hours on one RTX 4070 Ti. The curriculum switches to Phase 1 at update 1,000.*
 
@@ -62,9 +65,9 @@ None of the bugs showed up in the reward curve. I found them by comparing the ro
 - A headless evaluation of an update-600 checkpoint walks the whole 14.7-minute reference clip without a fall, even though it was trained only on 10-second episodes.
 - A small ablation of termination penalties (one seed per variant) suggests the fall penalty does most of the work early in training and mainly speeds up learning. Final path tracking did not need it.
 
-<CustomImage src="/projects/h1/fig3-terms.jpg" alt="The four tracking reward terms during training" height={1051} width={1687} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/h1_deepmimic/fig3-terms.jpg" alt="The four tracking reward terms during training" height={1051} width={1687} />
 
-<CustomImage src="/projects/h1/fig3-diag.jpg" alt="Fall rate, divergence rate and airborne rate during training" height={534} width={1693} />
+<CustomImage src="https://raw.githubusercontent.com/Bhargavoza1/projects/main/images/h1_deepmimic/fig3-diag.jpg" alt="Fall rate, divergence rate and airborne rate during training" height={534} width={1693} />
 
 *Top: the four tracking terms. Bottom: fall rate, divergence rate and airborne rate (logged only, not rewarded).*
 
