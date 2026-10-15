@@ -1,0 +1,92 @@
+---
+title: "Unitree H1 DeepMimic: Silent Failures in Motion Imitation"
+image: /projects/h1/hero.jpg
+description: A from-scratch DeepMimic reimplementation for the 19-DOF Unitree H1 humanoid in MuJoCo MJX and JAX, and the 22 silent failures that the reward curve never showed.
+date: 2026-10-05
+tags: [robotics, reinforcement_learning, humanoid, mujoco, jax, research, project]
+---
+
+**Paper:** [What the Reward Curve Didn’t Show: Silent Failures in DeepMimic-Style Imitation on the Unitree H1](https://doi.org/10.5281/zenodo.23150476) (Zenodo preprint, DOI 10.5281/zenodo.23150476) &nbsp;·&nbsp; [Download PDF](/papers/Oza_2026_Silent_Failures_DeepMimic_H1.pdf) &nbsp;·&nbsp; [Code on GitHub](https://github.com/Bhargavoza1/h1-imitation-learning)
+
+<CustomImage src="/projects/h1/hero.jpg" alt="The trained Unitree H1 policy (black) walking next to the reference motion (transparent green) in the MuJoCo viewer" height={1112} width={1500} priority="true" />
+
+*The trained policy (black) walking next to the reference motion (green ghost) in the MuJoCo viewer.*
+
+## At a glance
+
+- **Robot:** full 19-DOF Unitree H1 (10 leg, 1 torso, 8 arm joints)
+- **Stack:** MuJoCo MJX, JAX, PPO. 4,096 parallel environments at about 8,800 steps per second on a single RTX 4070 Ti
+- **Result:** the policy walks the full 14.7-minute reference clip in simulation without a single fall, with at most 24 cm of sideways offset from the reference path
+- **Main finding:** most problems that looked like reward-design problems were really action-space or data-pipeline bugs, and the total reward could not tell the two apart
+- **Scope:** a case study, not a new method. Simulation only, one robot, one walking clip
+
+## What I built
+
+I reimplemented DeepMimic-style motion imitation from scratch: a policy gets a human walking clip as reference and is rewarded at every step for matching the reference pose, velocities, end-effector positions and centre of mass. The pipeline is mine: environment, reference-motion processing, reward, PPO training loop and curriculum, all in JAX on MJX so that thousands of robots train in parallel on one consumer GPU.
+
+Building it from scratch gave me something more useful than a walking robot: a list of ways such a pipeline can fail quietly. In almost every case the training ran, the reward went up, and the robot still did the wrong thing.
+
+## Four failures the reward curve hid
+
+**1. The reference pose was unreachable.** My first action scale kept targets inside the joint limits, but it made the reachable range as small as the shorter side of each joint. The ankle could not reach the +15° dorsiflexion the reference needs, so the feet could not clear the ground and the robot shuffled. The same bug pinned the shoulder roll and elbow at their limits, which looked like "the arms are not learning". Switching to the Isaac Lab H1 action setting, with no reward change, raised walking speed from 0.74 to 1.26 m/s.
+
+**2. Two reward terms went blind.** DeepMimic measures end-effector and centre-of-mass error in the world frame. On my robot the pelvis drifted away from the reference within the first second of every episode, and both terms fell to near zero. That silently removed 25% of the tracking reward, yet the total still rose because the pose term kept improving. I moved both terms to the pelvis frame and put the path information back into the observations and terminations.
+
+**3. A reward term that looked solved.** After that change, the centre-of-mass reward sat at 0.9 to 0.97 from the first update while the robot visibly drifted sideways. The error was only centimetres, so with the original sharpness a 3 cm error scored 0.991, almost the same as a perfect match: no gradient. Raising the sharpness to 3000 made a 1 cm error score 0.74 and the drift disappeared. A term that is near 1 from update 0 is as broken as a term that is near 0.
+
+**4. A sign typo that taught the robot to hop.** A double negative (`--0.30`) turned the airborne penalty into a bonus. The robot spent 17% of the time with both feet off the ground while the total reward stayed positive. It was only visible in the video and the logged airborne rate.
+
+The paper catalogues 22 failures in seven groups (action space, coordinate frames, reward scale, reward code, data pipeline, training loop and simulation setup), each with the symptom, the root cause and the effect of the fix.
+
+## How I found them
+
+None of the bugs showed up in the reward curve. I found them by comparing the robot with the reference joint by joint, using a reference "ghost" viewer and a headless drift diagnostic (these tools were built with AI assistance, see the acknowledgement below). The paper turns this into a short checklist to run before tuning any reward:
+
+1. Check that every reference pose is reachable by the action space and joint limits.
+2. Check the coordinate frame of every quantity in the reward and observation.
+3. For every `exp(-alpha * error)` term, check that alpha times a typical error is of order one.
+4. Check that the reset state is physically consistent and the first clip frames have valid velocities.
+5. Evaluate the policy in exactly the same simulation model as training.
+6. Log every reward term separately, and look at the robot, not only the curve.
+
+## Results
+
+<CustomImage src="/projects/h1/fig2-reward.jpg" alt="Mean reward per step over 1,605 PPO updates" height={606} width={1694} />
+
+<CustomImage src="/projects/h1/fig2-done.jpg" alt="Termination rate over 1,605 PPO updates" height={606} width={1694} />
+
+*Mean reward (top) and termination rate (bottom) over 1,605 PPO updates, about 4.9 hours on one RTX 4070 Ti. The curriculum switches to Phase 1 at update 1,000.*
+
+- The fall rate drops to almost zero by update 500 and is exactly zero at the end of training. The termination rate settles at about 0.3%.
+- After the fixes, the plain DeepMimic reward is enough. Removing an earlier velocity-command term, a path term and a symmetry term did not stop the robot from walking straight.
+- A headless evaluation of an update-600 checkpoint walks the whole 14.7-minute reference clip without a fall, even though it was trained only on 10-second episodes.
+- A small ablation of termination penalties (one seed per variant) suggests the fall penalty does most of the work early in training and mainly speeds up learning. Final path tracking did not need it.
+
+<CustomImage src="/projects/h1/fig3-terms.jpg" alt="The four tracking reward terms during training" height={1051} width={1687} />
+
+<CustomImage src="/projects/h1/fig3-diag.jpg" alt="Fall rate, divergence rate and airborne rate during training" height={534} width={1693} />
+
+*Top: the four tracking terms. Bottom: fall rate, divergence rate and airborne rate (logged only, not rewarded).*
+
+## Limitations
+
+I wrote these into the paper on purpose:
+
+- Simulation only, one robot and one walking clip. Nothing has been tested on hardware.
+- The termination ablation uses one seed per variant and was run before a training-loop fix, so it should be read as an indication, not an established effect.
+- I did not compare against the LocoMuJoCo H1 baseline, which walks more smoothly and in more directions. The goal here is the failure analysis, not the best policy.
+- The retargeted reference floats about 3.7 cm above the floor on average, and I did not correct it.
+- A small asymmetry remains: the left foot lands about 8 cm narrower than the reference in every run, and I have not found the cause yet.
+- The airborne rate rises again to about 5% late in training. I have not investigated this yet.
+
+## Tech
+
+MuJoCo MJX, JAX, PPO with GAE, Python, MuJoCo Menagerie H1 model, LocoMuJoCo reference motion, Isaac Lab H1 PD gains and action scale.
+
+## Acknowledgement
+
+As stated in the paper, the diagnostic scripts and the drafting of the manuscript were done with the help of an AI assistant (Claude, Anthropic). The pipeline, experiments, results and conclusions are my own, and I checked all content and take full responsibility for it.
+
+## Cite
+
+Oza, B. (2026). *What the Reward Curve Didn’t Show: Silent Failures in DeepMimic-Style Imitation on the Unitree H1.* Zenodo. https://doi.org/10.5281/zenodo.23150476
